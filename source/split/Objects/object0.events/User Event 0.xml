@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<event category="OTHER" id="10">
+  <actions>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">abc=file_bin_open(find_spz, 0)
+
+var_posx1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posx=real(sk_dec_conversion(var_posx4+var_posx3+var_posx2+var_posx1))
+
+var_posy1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posy=real(sk_dec_conversion(var_posy4+var_posy3+var_posy2+var_posy1))
+//가로, 세로
+
+file_bin_seek(abc, 32)
+
+for(i=0; i!=posy; i+=1)
+{
+
+file_bin_read_byte(abc)
+file_bin_read_byte(abc)
+//쓰레기값
+
+for(k=0; k!=posx; k+=1)
+{
+
+xred[i, k]=file_bin_read_byte(abc)
+
+if xred[i, k]=0
+{
+vars2=file_bin_read_byte(abc)
+for(u=0; u!=vars2; u+=1){xred[i, k+u]=0}
+k+=vars2-1
+}
+
+}
+
+}
+
+file_bin_close(abc)
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">spz 로드</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">filessed=file_bin_open(dir+"\"+"spz.tmp", 1)
+
+for(i=0; i!=posy; i+=1)
+{
+for(j=0; j!=posx; j+=1)
+{
+sting=rgb[xred[i, j]]
+
+if rgb_delete=1 and sting=rgb_shadow
+{
+sting=rgb_hide
+}
+
+file_bin_write_byte(filessed, real(sk_dec_conversion(string_copy(sting, 1, 2))))
+file_bin_write_byte(filessed, real(sk_dec_conversion(string_copy(sting, 3, 2))))
+file_bin_write_byte(filessed, real(sk_dec_conversion(string_copy(sting, 5, 2))))
+
+}
+}
+
+file_bin_close(filessed)
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">rgb 저장</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">bmp=save_dir+"\"+filename_name(filename_change_ext(find_spz, "")+".bmp")
+file_delete(bmp)
+//BMP name
+
+filessed=file_bin_open(bmp, 1)
+su=sk_bmp_set(filessed, posx, posy)
+file_bin_close(filessed)
+//토대
+
+stdos_command("RGBtoBMP.dll", chr(34)+dir+"\"+"spz.tmp"+chr(34)+" "+chr(34)+string(bmp)+chr(34)+" "+chr(34)+string(posx)+chr(34)+" "+chr(34)+string(su)+chr(34), 1)
+//bmp화
+
+file_delete(dir+"\"+"spz.tmp")
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">bmp화</argument>
+      </arguments>
+    </action>
+  </actions>
+</event>

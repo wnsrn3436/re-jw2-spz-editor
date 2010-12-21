@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<event category="OTHER" id="11">
+  <actions>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">abc=file_bin_open(find_bmp, 0)
+
+fi_size=file_bin_size(abc)
+//사이즈
+
+file_bin_seek(abc, 18)
+
+var_posx1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posx=real(sk_dec_conversion(var_posx4+var_posx3+var_posx2+var_posx1))
+
+var_posy1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posy=real(sk_dec_conversion(var_posy4+var_posy3+var_posy2+var_posy1))
+//가로, 세로
+
+if sk_modulus(posx, 2)=0
+{
+su=sk_modulus(fi_size-54-posx, 4)
+}
+else
+{
+su=sk_modulus(fi_size-posx, 4)
+}
+//쓰레기값
+
+var check_o, seek_pos, total;
+check_o=0
+total=0
+
+file_delete(save_dir+"\"+filename_name(filename_change_ext(find_bmp, "")+".spz"))
+
+filessed2=file_bin_open(save_dir+"\"+filename_name(filename_change_ext(find_bmp, "")+".spz"), 1)
+
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posx1))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posx2))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posx3))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posx4))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posy1))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posy2))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posy3))
+file_bin_write_byte(filessed2, sk_dec_conversion(var_posy4))
+//가로 세로
+
+var_wox=sk_hex_conversion(abs(floor(posx/2)-4294967295-1-1))
+var_woy=sk_hex_conversion(abs(floor(posy/2)+floor(posy/2/2)-4294967295-1))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 1, 2))))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 1, 2))))
+//중심점
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 1, 2))))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 1, 2))))
+//충돌점
+
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+//사이즈
+
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+//끝
+
+for(i=file_bin_size(abc); i!=54; i-=posx*3+su)
+{
+file_bin_seek(abc, i-posx*3-su)
+
+seek_pos=file_bin_position(filessed2)
+file_bin_write_byte(filessed2, 0)
+file_bin_write_byte(filessed2, 0)
+
+for(h=0; h!=posx; h+=1)
+{
+var_rgb=""
+var_rgb1=sk_hex_conversion(file_bin_read_byte(abc))
+var_rgb2=sk_hex_conversion(file_bin_read_byte(abc))
+var_rgb3=sk_hex_conversion(file_bin_read_byte(abc))
+
+var_rgb=var_rgb3+var_rgb2+var_rgb1
+
+for(j=0; j!=256; j+=1)
+{
+if rgb[j]=""
+{
+rgb[j]=var_rgb
+
+file_bin_seek(filessed3, (255-j+2)*4)
+file_bin_write_byte(filessed3, real(sk_dec_conversion(var_rgb3)))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(var_rgb2)))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(var_rgb1)))
+file_bin_write_byte(filessed3, 0)
+
+if var_rgb="000000"{check_o+=1}
+if check_o&gt;0{if var_rgb!="000000"{file_bin_write_byte(filessed2, 0); file_bin_write_byte(filessed2, check_o); check_o=0; total+=3; script7(filessed2, j)}}
+else{script7(filessed2, j); total+=1}
+break
+}
+
+if rgb[j]=var_rgb
+{
+if var_rgb="000000"{check_o+=1}
+if check_o&gt;0{if var_rgb!="000000"{file_bin_write_byte(filessed2, 0); file_bin_write_byte(filessed2, check_o); check_o=0; total+=3; script7(filessed2, j)}}
+else{script7(filessed2, j); total+=1}
+break
+}
+
+}
+}
+
+if check_o&gt;0{file_bin_write_byte(filessed2, 0); file_bin_write_byte(filessed2, check_o); check_o=0; total+=2}
+
+file_bin_seek(filessed2, seek_pos)
+file_bin_write_byte(filessed2, total)
+file_bin_seek(filessed2, file_bin_size(filessed2))
+total=0
+}
+
+var_sizze=sk_hex_conversion(file_bin_size(filessed2)-32)
+
+while(string_length(var_sizze)!=8){var_sizze="0"+var_sizze}
+
+file_bin_seek(filessed2, 24)
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_sizze, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_sizze, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_sizze, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_sizze, 1, 2))))
+
+file_bin_close(filessed2)
+file_bin_close(abc)
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">bmp로드</argument>
+      </arguments>
+    </action>
+  </actions>
+</event>

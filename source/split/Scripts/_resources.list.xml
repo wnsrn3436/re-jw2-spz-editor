@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+  <resource name="sk_hex_conversion" type="RESOURCE"/>
+  <resource name="sk_dec_conversion" type="RESOURCE"/>
+  <resource name="sk_pnt_load" type="RESOURCE"/>
+  <resource name="sk_bmp_set" type="RESOURCE"/>
+  <resource name="sk_modulus" type="RESOURCE"/>
+  <resource name="silent_dos" type="GROUP"/>
+  <resource name="script7" type="RESOURCE"/>
+</resources>

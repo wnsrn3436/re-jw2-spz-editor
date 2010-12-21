@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<event category="CREATE" id="0">
+  <actions>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">chooses=show_message_ext("편집방식", "SPZ-&gt;BMP", "BMP-&gt;SPZ", "SPZ중점변경")
+if chooses=0{game_end()}
+
+stdos_dll_init("silent_dos.dll")
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">묻고</argument>
+      </arguments>
+    </action>
+    <action id="612" library="1">
+      <!--action name: If_Variable-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>true</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>FUNCTION</actionType>
+      <functionName>action_if_variable</functionName>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="EXPRESSION">chooses</argument>
+        <argument kind="EXPRESSION">1</argument>
+        <argument kind="MENU">0</argument>
+      </arguments>
+    </action>
+    <action id="422" library="1">
+      <!--action name: Start_Block-->
+      <kind>BEGIN</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">ini_open("옵션.ini")
+
+rgb_delete=ini_read_real("SPZ-&gt;BMP", "rgb_delete", 0)
+
+ini_close()
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">ini 열고</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">pnt=get_open_filename("pnt 파일을 선택해주세요|*.pnt", "")
+dir=get_directory_alt("spz들이있는 폴더를 선택해주세요", "")
+save_dir=get_directory_alt("저장할 폴더를 선택해주세요", "")
+
+if pnt="" or dir="" or save_dir=""{game_end()}
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">열기</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">pnt_get_fi=file_bin_open(pnt, 0)
+txt_get_fi=file_text_open_write(save_dir+"\"+"세부사항.txt")
+
+file_text_write_string(txt_get_fi, "-투명색-")
+file_text_writeln(txt_get_fi)
+
+pnt_rgb=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+
+file_text_write_string(txt_get_fi, pnt_rgb)
+file_text_writeln(txt_get_fi)
+file_text_writeln(txt_get_fi)
+
+rgb_hide=pnt_rgb
+//
+
+file_bin_read_byte(pnt_get_fi)
+
+file_text_write_string(txt_get_fi, "-그림자색-")
+file_text_writeln(txt_get_fi)
+
+pnt_rgb=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+
+file_text_write_string(txt_get_fi, pnt_rgb)
+file_text_writeln(txt_get_fi)
+file_text_writeln(txt_get_fi)
+
+rgb_shadow=pnt_rgb
+//
+
+file_text_write_string(txt_get_fi, "-플레이어색-")
+file_text_writeln(txt_get_fi)
+
+for(i=0; i!=10; i+=1)
+{
+file_bin_seek(pnt_get_fi, 980+(i*4))
+pnt_rgb=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+pnt_rgb+=sk_hex_conversion(file_bin_read_byte(pnt_get_fi))
+
+file_text_write_string(txt_get_fi, pnt_rgb)
+file_text_writeln(txt_get_fi)
+}
+
+file_text_close(txt_get_fi)
+file_bin_close(pnt_get_fi)
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">세부사항 얻기</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">sk_pnt_load(pnt)
+//pnt
+
+find_spz=file_find_first(dir+"\"+"*.spz", "")
+
+while(find_spz!="")
+{
+find_spz=dir+"\"+find_spz
+event_user(0)
+find_spz=file_find_next()
+}
+
+file_find_close()
+
+game_restart()
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">본격적</argument>
+      </arguments>
+    </action>
+    <action id="424" library="1">
+      <!--action name: End_Block-->
+      <kind>END</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+    <action id="612" library="1">
+      <!--action name: If_Variable-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>true</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>FUNCTION</actionType>
+      <functionName>action_if_variable</functionName>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="EXPRESSION">chooses</argument>
+        <argument kind="EXPRESSION">2</argument>
+        <argument kind="MENU">0</argument>
+      </arguments>
+    </action>
+    <action id="422" library="1">
+      <!--action name: Start_Block-->
+      <kind>BEGIN</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">ini_open("옵션.ini")
+
+rgb_delete=ini_read_real("SPZ-&gt;BMP", "rgb_delete", 0)
+
+rgb_hide=ini_read_string("BMP-&gt;SPZ", "rgb_hide", "000000")
+rgb_shadow=ini_read_string("BMP-&gt;SPZ", "rgb_shadow", "FF00FF")
+
+for(i=0; i!=10; i+=1)
+{
+rgb_player_color_[i]=ini_read_string("BMP-&gt;SPZ", "rgb_player_color_"+string(i+1), "000000")
+}
+
+ini_close()
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">ini 열고</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">dir=get_directory_alt("bmp들이있는 폴더를 선택해주세요", "")
+pnt=get_save_filename("저장할 pnt파일을 선택해주세요|*.pnt", "")
+save_dir=get_directory_alt("spz를 저장할 폴더를 선택해주세요", "")
+
+if pnt="" or dir="" or save_dir=""{game_end()}
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">열기</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">to_rgb=rgb_hide
+rm_rgb=rgb_shadow
+
+for(i=0; i!=256; i+=1){rgb[i]=""}
+
+rgb[0]=to_rgb
+rgb[1]=rm_rgb
+
+rgb[2]="000000"
+
+for(i=0; i!=10; i+=1)
+{
+rgb[i+3]=rgb_player_color_[i]
+}
+
+file_delete(filename_change_ext(pnt, "")+".pnt")
+
+filessed3=file_bin_open(filename_change_ext(pnt, "")+".pnt", 1)
+
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(to_rgb, 1, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(to_rgb, 3, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(to_rgb, 5, 2))))
+file_bin_write_byte(filessed3, 0)
+
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rm_rgb, 1, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rm_rgb, 3, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rm_rgb, 5, 2))))
+file_bin_write_byte(filessed3, 0)
+
+for(i=255; i!=2; i-=1)
+{
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rgb[i], 1, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rgb[i], 3, 2))))
+file_bin_write_byte(filessed3, real(sk_dec_conversion(string_copy(rgb[i], 5, 2))))
+file_bin_write_byte(filessed3, 0)
+}
+
+file_bin_write_byte(filessed3, 255)
+file_bin_write_byte(filessed3, 255)
+file_bin_write_byte(filessed3, 255)
+file_bin_write_byte(filessed3, 0)
+
+find_bmp=file_find_first(dir+"\"+"*.bmp", "")
+
+while(find_bmp!="")
+{
+find_bmp=dir+"\"+find_bmp
+event_user(1)
+find_bmp=file_find_next()
+}
+
+file_find_close()
+
+file_bin_close(filessed3)
+
+game_restart()
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">본격적</argument>
+      </arguments>
+    </action>
+    <action id="424" library="1">
+      <!--action name: End_Block-->
+      <kind>END</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+    <action id="612" library="1">
+      <!--action name: If_Variable-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>true</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>FUNCTION</actionType>
+      <functionName>action_if_variable</functionName>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="EXPRESSION">chooses</argument>
+        <argument kind="EXPRESSION">3</argument>
+        <argument kind="MENU">0</argument>
+      </arguments>
+    </action>
+    <action id="422" library="1">
+      <!--action name: Start_Block-->
+      <kind>BEGIN</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">find_spz=get_open_filename("spz파일을 선택해주세요|*.spz", "")
+
+if find_spz=""{game_end()}
+else
+{
+abc=file_bin_open(find_spz, 0)
+
+var_posx1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posx=real(sk_dec_conversion(var_posx4+var_posx3+var_posx2+var_posx1))
+
+var_posy1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posy=real(sk_dec_conversion(var_posy4+var_posy3+var_posy2+var_posy1))
+//가로, 세로
+
+var_posx1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posxx=abs(real(sk_dec_conversion(var_posx4+var_posx3+var_posx2+var_posx1))-4294967295-1)
+
+var_posy1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posyy=abs(real(sk_dec_conversion(var_posy4+var_posy3+var_posy2+var_posy1))-4294967295-1)
+
+var_posx1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posx4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posxxx=abs(real(sk_dec_conversion(var_posx4+var_posx3+var_posx2+var_posx1))-4294967295-1)
+
+var_posy1=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy2=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy3=sk_hex_conversion(file_bin_read_byte(abc))
+var_posy4=sk_hex_conversion(file_bin_read_byte(abc))
+
+posyyy=abs(real(sk_dec_conversion(var_posy4+var_posy3+var_posy2+var_posy1))-4294967295-1)
+
+file_bin_close(abc)
+}
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">get</argument>
+      </arguments>
+    </action>
+    <action id="603" library="1">
+      <!--action name: Code-->
+      <kind>CODE</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>true</canApplyTo>
+      <actionType>CODE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">posxx=get_integer("중점x　　", posxx)
+posyy=get_integer("중점y　　", posyy)
+
+posxxx=get_integer("충돌점x　　", posxxx)
+posyyy=get_integer("충돌점y　　", posyyy)
+
+filessed2=file_bin_open(find_spz, 1)
+
+file_bin_seek(filessed2, 8)
+
+var_wox=sk_hex_conversion(abs(posxx-4294967295-1))
+var_woy=sk_hex_conversion(abs(posyy-4294967295-1))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 1, 2))))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 1, 2))))
+
+var_wox=sk_hex_conversion(abs(posxxx-4294967295-1))
+var_woy=sk_hex_conversion(abs(posyyy-4294967295-1))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_wox, 1, 2))))
+
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 7, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 5, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 3, 2))))
+file_bin_write_byte(filessed2, real(sk_dec_conversion(string_copy(var_woy, 1, 2))))
+
+file_bin_close(filessed2)
+
+game_restart()
+</argument>
+      </arguments>
+    </action>
+    <action id="605" library="1">
+      <!--action name: Comment-->
+      <kind>NORMAL</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments>
+        <argument kind="STRING">set</argument>
+      </arguments>
+    </action>
+    <action id="424" library="1">
+      <!--action name: End_Block-->
+      <kind>END</kind>
+      <allowRelative>false</allowRelative>
+      <question>false</question>
+      <canApplyTo>false</canApplyTo>
+      <actionType>NONE</actionType>
+      <functionName/>
+      <relative>false</relative>
+      <not>false</not>
+      <appliesTo>.self</appliesTo>
+      <arguments/>
+    </action>
+  </actions>
+</event>
